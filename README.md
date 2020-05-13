@@ -7,7 +7,7 @@ Special thanks to https://github.com/cryptocoinjs/base-x for the javascript vers
 # Usage
 
 ```ts
-import { encode, decode } from "as-base58;
+import { encode, decode } from "as-base58";
 
 const input = "ABCD1234"
 
