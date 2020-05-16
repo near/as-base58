@@ -74,17 +74,13 @@ export function encode(source: Uint8Array): string {
 export function decodeUnsafe(source: string): Uint8Array | null {
   let srcLen = source.length;
   if (srcLen == 0) return new Uint8Array(0);
-
-  let psz = 0;
   // Skip leading spaces.
-  if (source.charCodeAt(psz) == /* Space */ 0x20) return null;
+  if (source.charCodeAt(0) == /* Space */ 0x20) return null;
   // Skip and count leading '1's.
-  let zeroes = 0;
   let length = 0;
-  while (source.charCodeAt(psz) == LEADER_CODE) {
-    zeroes++;
-    psz++;
-  }
+  let psz = 0;
+  while (source.charCodeAt(psz) == LEADER_CODE) psz++;
+  let zeroes = psz;
   // Allocate enough space in big-endian base256 representation.
   let size = FACTOR(srcLen - psz); // log(BASE) / log(256), rounded up.
   // log(size);
@@ -92,7 +88,7 @@ export function decodeUnsafe(source: string): Uint8Array | null {
   // Process the characters;
   while (srcLen > psz) {
     // Decode character
-    let carry: u32 = BASE_MAP[source.charCodeAt(psz)]
+    let carry: u32 = BASE_MAP[source.charCodeAt(psz++)]
     // Invalid character
     if (carry == 255) return null;
     let i = 0;
@@ -106,7 +102,6 @@ export function decodeUnsafe(source: string): Uint8Array | null {
       throw new Error('Non-zero carry');
     }
     length = i;
-    psz++;
   }
   // Skip trailing spaces.
   if (source.charCodeAt(psz) == /* Space */ 0x20) return null;

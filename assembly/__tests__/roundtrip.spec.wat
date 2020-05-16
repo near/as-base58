@@ -3135,48 +3135,44 @@
    local.get $2
    return
   end
-  i32.const 0
-  local.set $2
   local.get $0
-  local.get $2
+  i32.const 0
   call $~lib/string/String#charCodeAt
   i32.const 32
   i32.eq
   if
    i32.const 0
    call $~lib/rt/stub/__retain
-   local.set $3
+   local.set $2
    local.get $0
    call $~lib/rt/stub/__release
-   local.get $3
+   local.get $2
    return
   end
   i32.const 0
-  local.set $3
+  local.set $2
   i32.const 0
-  local.set $4
+  local.set $3
   loop $while-continue|0
    local.get $0
-   local.get $2
+   local.get $3
    call $~lib/string/String#charCodeAt
    global.get $assembly/index/LEADER_CODE
    i32.eq
-   local.set $5
-   local.get $5
+   local.set $4
+   local.get $4
    if
     local.get $3
     i32.const 1
     i32.add
     local.set $3
-    local.get $2
-    i32.const 1
-    i32.add
-    local.set $2
     br $while-continue|0
    end
   end
+  local.get $3
+  local.set $4
   local.get $1
-  local.get $2
+  local.get $3
   i32.sub
   local.set $5
   local.get $5
@@ -3195,14 +3191,19 @@
   local.set $6
   loop $while-continue|1
    local.get $1
-   local.get $2
+   local.get $3
    i32.gt_s
    local.set $7
    local.get $7
    if
     global.get $assembly/index/BASE_MAP
     local.get $0
-    local.get $2
+    local.get $3
+    local.tee $8
+    i32.const 1
+    i32.add
+    local.set $3
+    local.get $8
     call $~lib/string/String#charCodeAt
     call $~lib/typedarray/Uint8Array#__get
     local.set $8
@@ -3234,7 +3235,7 @@
       i32.const 1
      else
       local.get $9
-      local.get $4
+      local.get $2
       i32.lt_s
      end
      if (result i32)
@@ -3286,22 +3287,18 @@
      call $~lib/rt/stub/__release
      i32.const 784
      i32.const 512
-     i32.const 106
+     i32.const 102
      i32.const 6
      call $~lib/builtins/abort
      unreachable
     end
     local.get $9
-    local.set $4
-    local.get $2
-    i32.const 1
-    i32.add
     local.set $2
     br $while-continue|1
    end
   end
   local.get $0
-  local.get $2
+  local.get $3
   call $~lib/string/String#charCodeAt
   i32.const 32
   i32.eq
@@ -3317,7 +3314,7 @@
    return
   end
   local.get $5
-  local.get $4
+  local.get $2
   i32.sub
   local.set $7
   loop $while-continue|3
@@ -3344,23 +3341,23 @@
    end
   end
   i32.const 0
-  local.get $3
+  local.get $4
   local.get $5
   local.get $7
   i32.sub
   i32.add
   call $~lib/typedarray/Uint8Array#constructor
   local.set $11
-  local.get $3
+  local.get $4
   if
    local.get $11
    i32.const 0
    i32.const 0
-   local.get $3
+   local.get $4
    call $~lib/typedarray/Uint8Array#fill
    call $~lib/rt/stub/__release
   end
-  local.get $3
+  local.get $4
   local.set $12
   loop $while-continue|4
    local.get $7
@@ -3433,7 +3430,7 @@
   call $~lib/string/String.__concat
   local.tee $4
   i32.const 512
-  i32.const 130
+  i32.const 125
   i32.const 2
   call $~lib/builtins/abort
   unreachable
