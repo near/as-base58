@@ -3,6 +3,7 @@
 
 const ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
 const BASE = ALPHABET.length;
+const LOG2_BASE = 32 - clz(BASE);
 const LEADER = ALPHABET.charAt(0);
 const LEADER_CODE = ALPHABET.charCodeAt(0);
 const iFACTOR = 2; // TODO: Calculate precise value to avoid overallocating
@@ -18,7 +19,7 @@ for (let i = 0; i < BASE; i++) {
 
 @inline
 function FACTOR(length: i32): i32 {
-  return ((length * (32 - clz(BASE)) - 1) >> 3) + 1; // log(BASE) / log(256), rounded up
+  return ((length * LOG2_BASE - 1) >> 3) + 1; // log(BASE) / log(256), rounded up
 }
 
 /**
@@ -115,7 +116,7 @@ export function decodeUnsafe(source: string): Uint8Array | null {
     it4++;
   }
   let vch = new Uint8Array(zeroes + (size - it4));
-  vch.fill(0, 0, zeroes);
+  if (zeroes) vch.fill(0, 0, zeroes);
   let j = zeroes;
   while (it4 != size) {
     vch[j++] = b256[it4++];

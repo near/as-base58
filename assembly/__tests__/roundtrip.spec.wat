@@ -94,6 +94,7 @@
  (global $~lib/rt/stub/offset (mut i32) (i32.const 0))
  (global $assembly/index/ALPHABET i32 (i32.const 32))
  (global $assembly/index/BASE (mut i32) (i32.const 0))
+ (global $assembly/index/LOG2_BASE (mut i32) (i32.const 0))
  (global $assembly/index/LEADER (mut i32) (i32.const 0))
  (global $assembly/index/LEADER_CODE (mut i32) (i32.const 0))
  (global $assembly/index/iFACTOR i32 (i32.const 2))
@@ -2179,6 +2180,11 @@
   call $~lib/string/String#get:length
   global.set $assembly/index/BASE
   i32.const 32
+  global.get $assembly/index/BASE
+  i32.clz
+  i32.sub
+  global.set $assembly/index/LOG2_BASE
+  i32.const 32
   i32.const 0
   call $~lib/string/String#charAt
   global.set $assembly/index/LEADER
@@ -2226,7 +2232,7 @@
      call $~lib/string/String.__concat
      local.tee $5
      i32.const 512
-     i32.const 14
+     i32.const 15
      i32.const 4
      call $~lib/builtins/abort
      unreachable
@@ -3002,7 +3008,7 @@
     if
      i32.const 784
      i32.const 512
-     i32.const 56
+     i32.const 57
      i32.const 4
      call $~lib/builtins/abort
      unreachable
@@ -3174,10 +3180,7 @@
   i32.sub
   local.set $5
   local.get $5
-  i32.const 32
-  global.get $assembly/index/BASE
-  i32.clz
-  i32.sub
+  global.get $assembly/index/LOG2_BASE
   i32.mul
   i32.const 1
   i32.sub
@@ -3283,7 +3286,7 @@
      call $~lib/rt/stub/__release
      i32.const 784
      i32.const 512
-     i32.const 105
+     i32.const 106
      i32.const 6
      call $~lib/builtins/abort
      unreachable
@@ -3348,12 +3351,15 @@
   i32.add
   call $~lib/typedarray/Uint8Array#constructor
   local.set $11
-  local.get $11
-  i32.const 0
-  i32.const 0
   local.get $3
-  call $~lib/typedarray/Uint8Array#fill
-  call $~lib/rt/stub/__release
+  if
+   local.get $11
+   i32.const 0
+   i32.const 0
+   local.get $3
+   call $~lib/typedarray/Uint8Array#fill
+   call $~lib/rt/stub/__release
+  end
   local.get $3
   local.set $12
   loop $while-continue|4
@@ -3427,7 +3433,7 @@
   call $~lib/string/String.__concat
   local.tee $4
   i32.const 512
-  i32.const 129
+  i32.const 130
   i32.const 2
   call $~lib/builtins/abort
   unreachable
