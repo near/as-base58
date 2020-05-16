@@ -2876,72 +2876,68 @@
   local.get $0
   call $~lib/rt/stub/__retain
   local.set $0
-  i32.const 0
+  local.get $0
+  call $~lib/typedarray/Uint8Array#get:length
   local.set $1
   i32.const 0
   local.set $2
-  i32.const 0
-  local.set $3
-  local.get $0
-  call $~lib/typedarray/Uint8Array#get:length
-  local.set $4
   loop $while-continue|0
-   local.get $3
-   local.get $4
+   local.get $2
+   local.get $1
    i32.ne
    if (result i32)
     local.get $0
-    local.get $3
+    local.get $2
     call $~lib/typedarray/Uint8Array#__get
     i32.const 0
     i32.eq
    else
     i32.const 0
    end
-   local.set $5
-   local.get $5
+   local.set $3
+   local.get $3
    if
-    local.get $3
+    local.get $2
     i32.const 1
     i32.add
-    local.set $3
-    local.get $1
-    i32.const 1
-    i32.add
-    local.set $1
+    local.set $2
     br $while-continue|0
    end
   end
-  local.get $4
-  local.get $3
+  local.get $2
+  local.set $3
+  local.get $1
+  local.get $2
   i32.sub
-  local.set $5
-  local.get $5
+  local.set $4
+  local.get $4
   i32.const 554
   i32.mul
   i32.const 405
   i32.div_s
   i32.const 1
   i32.add
+  local.set $4
+  i32.const 0
+  local.get $4
+  call $~lib/typedarray/Uint8Array#constructor
   local.set $5
   i32.const 0
-  local.get $5
-  call $~lib/typedarray/Uint8Array#constructor
   local.set $6
   loop $while-continue|1
-   local.get $3
-   local.get $4
+   local.get $2
+   local.get $1
    i32.ne
    local.set $7
    local.get $7
    if
     local.get $0
-    local.get $3
+    local.get $2
     call $~lib/typedarray/Uint8Array#__get
     local.set $8
     i32.const 0
     local.set $9
-    local.get $5
+    local.get $4
     i32.const 1
     i32.sub
     local.set $10
@@ -2957,7 +2953,7 @@
        i32.const 1
       else
        local.get $9
-       local.get $2
+       local.get $6
        i32.lt_s
       end
      else
@@ -2967,14 +2963,14 @@
      local.get $11
      if
       local.get $8
-      local.get $6
+      local.get $5
       local.get $10
       call $~lib/typedarray/Uint8Array#__get
       i32.const 8
       i32.shl
       i32.add
       local.set $8
-      local.get $6
+      local.get $5
       local.get $10
       local.get $8
       i32.const 58
@@ -3002,30 +2998,30 @@
     if
      i32.const 784
      i32.const 512
-     i32.const 68
+     i32.const 64
      i32.const 6
      call $~lib/builtins/abort
      unreachable
     end
     local.get $9
-    local.set $2
-    local.get $3
+    local.set $6
+    local.get $2
     i32.const 1
     i32.add
-    local.set $3
+    local.set $2
     br $while-continue|1
    end
   end
-  local.get $5
-  local.get $2
+  local.get $4
+  local.get $6
   i32.sub
   local.set $7
   loop $while-continue|3
    local.get $7
-   local.get $5
+   local.get $4
    i32.ne
    if (result i32)
-    local.get $6
+    local.get $5
     local.get $7
     call $~lib/typedarray/Uint8Array#__get
     i32.const 0
@@ -3044,19 +3040,19 @@
    end
   end
   global.get $assembly/index/LEADER
-  local.get $1
+  local.get $3
   call $~lib/string/String#repeat
   local.set $10
   loop $for-loop|4
    local.get $7
-   local.get $5
+   local.get $4
    i32.lt_s
    local.set $11
    local.get $11
    if
     local.get $10
     global.get $assembly/index/ALPHABET
-    local.get $6
+    local.get $5
     local.get $7
     call $~lib/typedarray/Uint8Array#__get
     call $~lib/string/String#charAt
@@ -3089,7 +3085,7 @@
   end
   local.get $10
   local.set $11
-  local.get $6
+  local.get $5
   call $~lib/rt/stub/__release
   local.get $0
   call $~lib/rt/stub/__release
@@ -3276,7 +3272,7 @@
      call $~lib/rt/stub/__release
      i32.const 784
      i32.const 512
-     i32.const 113
+     i32.const 109
      i32.const 6
      call $~lib/builtins/abort
      unreachable
@@ -3419,7 +3415,7 @@
   call $~lib/string/String.__concat
   local.tee $4
   i32.const 512
-  i32.const 135
+  i32.const 131
   i32.const 2
   call $~lib/builtins/abort
   unreachable

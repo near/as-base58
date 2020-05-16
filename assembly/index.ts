@@ -40,19 +40,15 @@ function INV_FACTOR(length: i32): i32 {
 export function encode(source: Uint8Array): string {
 
   // Skip & count leading zeroes.
-  let zeroes = 0;
-  let length = 0;
-  let pbegin = 0;
   let pend = source.length;
-
-  while (pbegin != pend && source[pbegin] == 0) {
-    pbegin++;
-    zeroes++;
-  }
+  let pbegin = 0;
+  while (pbegin != pend && source[pbegin] == 0) ++pbegin;
+  let zeroes = pbegin;
 
   // Allocate enough space in big-endian base58 representation.
   let size = INV_FACTOR(pend - pbegin);
   let b58 = new Uint8Array(size);
+  let length = 0;
 
   // Process the bytes.
   while (pbegin != pend) {
