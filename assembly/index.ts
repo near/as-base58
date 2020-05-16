@@ -17,10 +17,10 @@ const BASE_MAP = new Uint8Array(256).fill(0xFF);
 
 for (let i = 0; i < BASE; i++) {
   let code = ALPHABET.charCodeAt(i);
-  if (BASE_MAP[code] != 0xFF) {
+  if (unchecked(BASE_MAP[code]) != 0xFF) {
     throw new TypeError(String.fromCharCode(code) + ' is ambiguous');
   }
-  BASE_MAP[code] = i;
+  unchecked(BASE_MAP[code] = i);
 }
 
 @inline
@@ -61,7 +61,7 @@ export function encode(source: Uint8Array): string {
       carry = carry / BASE;
     }
     if (ASC_OPTIMIZE_LEVEL == 0) {
-      assert(carry == 0, 'Non-zero carry');
+      assert(!carry, 'Non-zero carry');
     }
     length = i;
     pbegin++;
@@ -95,7 +95,7 @@ export function decodeUnsafe(source: string): Uint8Array | null {
   // Process the characters;
   while (srcLen > psz) {
     // Decode character
-    let carry: u32 = BASE_MAP[source.charCodeAt(psz++)]
+    let carry: u32 = unchecked(BASE_MAP[source.charCodeAt(psz++)])
     // Invalid character
     if (carry == 0xFF) return null;
     let i = 0;
@@ -105,8 +105,8 @@ export function decodeUnsafe(source: string): Uint8Array | null {
       b256[it3] = carry;
       carry >>>= 8;
     }
-    if (carry != 0) {
-      throw new Error('Non-zero carry');
+    if (ASC_OPTIMIZE_LEVEL == 0) {
+      assert(!carry, 'Non-zero carry');
     }
     length = i;
   }
