@@ -3179,12 +3179,10 @@
   i32.clz
   i32.sub
   i32.mul
-  f64.convert_i32_s
-  f64.const 0.5
-  f64.sub
-  i32.trunc_f64_s
+  i32.const 1
+  i32.sub
   i32.const 3
-  i32.shr_u
+  i32.shr_s
   i32.const 1
   i32.add
   local.set $5

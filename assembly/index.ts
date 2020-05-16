@@ -18,7 +18,7 @@ for (let i = 0; i < BASE; i++) {
 
 @inline
 function FACTOR(length: i32): i32 {
-  return (i32(length * (32 - clz(BASE)) - 0.5) >>> 3) + 1; // log(BASE) / log(256), rounded up
+  return ((length * (32 - clz(BASE)) - 1) >> 3) + 1; // log(BASE) / log(256), rounded up
 }
 
 /**
