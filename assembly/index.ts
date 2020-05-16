@@ -2,15 +2,16 @@
 // https://github.com/cryptocoinjs/base-x/blob/master/src/index.js
 
 const ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
-
 @inline const BASE = 58;
-@inline const LOG2_BASE = 32 - clz(BASE);
 
 const LEADER = ALPHABET.charAt(0);
 const LEADER_CODE = ALPHABET.charCodeAt(0);
 // log(256) / log(58) = 1.365658237309761 ~= 554 / 405
-const INV_FACTOR_NUM = 554;
-const INV_FACTOR_DEN = 405;
+@inline const FACTOR_NUM = 406;
+@inline const FACTOR_DEN = 554;
+
+@inline const INV_FACTOR_NUM = FACTOR_DEN;
+@inline const INV_FACTOR_DEN = FACTOR_NUM - 1;
 
 const BASE_MAP = new Uint8Array(256).fill(0xFF);
 
@@ -24,7 +25,12 @@ for (let i = 0; i < BASE; i++) {
 
 @inline
 function FACTOR(length: i32): i32 {
-  return ((length * LOG2_BASE - 1) >> 3) + 1; // log(BASE) / log(256), rounded up
+  return length * FACTOR_NUM / FACTOR_DEN + 1; // log(58) / log(256), rounded up
+}
+
+@inline
+function INV_FACTOR(length: i32): i32 {
+  return length * INV_FACTOR_NUM / INV_FACTOR_DEN + 1; // log(256) / log(58), rounded up
 }
 
 /**
@@ -45,7 +51,7 @@ export function encode(source: Uint8Array): string {
   }
 
   // Allocate enough space in big-endian base58 representation.
-  let size = (pend - pbegin) * INV_FACTOR_NUM / INV_FACTOR_DEN + 1;
+  let size = INV_FACTOR(pend - pbegin);
   let b58 = new Uint8Array(size);
 
   // Process the bytes.
@@ -87,7 +93,7 @@ export function decodeUnsafe(source: string): Uint8Array | null {
   while (source.charCodeAt(psz) == LEADER_CODE) ++psz;
   let zeroes = psz;
   // Allocate enough space in big-endian base256 representation.
-  let size = FACTOR(srcLen - psz); // log(BASE) / log(256), rounded up.
+  let size = FACTOR(srcLen - psz);
   // log(size);
   let b256 = new Uint8Array(size);
   // Process the characters;
