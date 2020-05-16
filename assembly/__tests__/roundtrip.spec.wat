@@ -97,7 +97,8 @@
  (global $assembly/index/LOG2_BASE (mut i32) (i32.const 0))
  (global $assembly/index/LEADER (mut i32) (i32.const 0))
  (global $assembly/index/LEADER_CODE (mut i32) (i32.const 0))
- (global $assembly/index/iFACTOR i32 (i32.const 2))
+ (global $assembly/index/INV_FACTOR_NUM i32 (i32.const 554))
+ (global $assembly/index/INV_FACTOR_DEN i32 (i32.const 405))
  (global $~lib/ASC_SHRINK_LEVEL i32 (i32.const 0))
  (global $~lib/builtins/i32.MAX_VALUE i32 (i32.const 2147483647))
  (global $assembly/index/BASE_MAP (mut i32) (i32.const 0))
@@ -2232,7 +2233,7 @@
      call $~lib/string/String.__concat
      local.tee $5
      i32.const 512
-     i32.const 15
+     i32.const 18
      i32.const 4
      call $~lib/builtins/abort
      unreachable
@@ -2925,8 +2926,10 @@
   local.get $4
   local.get $3
   i32.sub
-  global.get $assembly/index/iFACTOR
+  global.get $assembly/index/INV_FACTOR_NUM
   i32.mul
+  global.get $assembly/index/INV_FACTOR_DEN
+  i32.div_s
   i32.const 1
   i32.add
   local.set $5
@@ -3008,7 +3011,7 @@
     if
      i32.const 784
      i32.const 512
-     i32.const 57
+     i32.const 60
      i32.const 4
      call $~lib/builtins/abort
      unreachable
@@ -3284,7 +3287,7 @@
      call $~lib/rt/stub/__release
      i32.const 784
      i32.const 512
-     i32.const 102
+     i32.const 105
      i32.const 6
      call $~lib/builtins/abort
      unreachable
@@ -3427,7 +3430,7 @@
   call $~lib/string/String.__concat
   local.tee $4
   i32.const 512
-  i32.const 125
+  i32.const 128
   i32.const 2
   call $~lib/builtins/abort
   unreachable

@@ -6,7 +6,10 @@ const BASE = ALPHABET.length;
 const LOG2_BASE = 32 - clz(BASE);
 const LEADER = ALPHABET.charAt(0);
 const LEADER_CODE = ALPHABET.charCodeAt(0);
-const iFACTOR = 2; // TODO: Calculate precise value to avoid overallocating
+// log(256) / log(58) = 1.365658237309761 ~= 554 / 405
+const INV_FACTOR_NUM = 554;
+const INV_FACTOR_DEN = 405;
+
 const BASE_MAP = new Uint8Array(256).fill(0xFF);
 
 for (let i = 0; i < BASE; i++) {
@@ -40,7 +43,7 @@ export function encode(source: Uint8Array): string {
   }
 
   // Allocate enough space in big-endian base58 representation.
-  let size = (pend - pbegin) * iFACTOR + 1;
+  let size = (pend - pbegin) * INV_FACTOR_NUM / INV_FACTOR_DEN + 1;
   let b58 = new Uint8Array(size);
 
   // Process the bytes.
