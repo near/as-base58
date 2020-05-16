@@ -7,11 +7,11 @@ const LOG2_BASE = 32 - clz(BASE);
 const LEADER = ALPHABET.charAt(0);
 const LEADER_CODE = ALPHABET.charCodeAt(0);
 const iFACTOR = 2; // TODO: Calculate precise value to avoid overallocating
-const BASE_MAP = new Uint8Array(256).fill(255);
+const BASE_MAP = new Uint8Array(256).fill(0xFF);
 
 for (let i = 0; i < BASE; i++) {
   let code = ALPHABET.charCodeAt(i);
-  if (BASE_MAP[code] != 255) {
+  if (BASE_MAP[code] != 0xFF) {
     throw new TypeError(String.fromCharCode(code) + ' is ambiguous');
   }
   BASE_MAP[code] = i;
@@ -99,7 +99,7 @@ export function decodeUnsafe(source: string): Uint8Array | null {
     let it3 = size - 1;
     for (; (carry != 0 || i < length) && (it3 != -1); it3--, i++) {
       carry += u32(BASE * b256[it3]);
-      b256[it3] = carry & 255;
+      b256[it3] = carry & 0xFF;
       carry >>>= 8;
     }
     if (carry != 0) {
