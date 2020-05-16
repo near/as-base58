@@ -93,8 +93,6 @@
  (global $~lib/rt/stub/startOffset (mut i32) (i32.const 0))
  (global $~lib/rt/stub/offset (mut i32) (i32.const 0))
  (global $assembly/index/ALPHABET i32 (i32.const 32))
- (global $assembly/index/BASE (mut i32) (i32.const 0))
- (global $assembly/index/LOG2_BASE (mut i32) (i32.const 0))
  (global $assembly/index/LEADER (mut i32) (i32.const 0))
  (global $assembly/index/LEADER_CODE (mut i32) (i32.const 0))
  (global $assembly/index/INV_FACTOR_NUM i32 (i32.const 554))
@@ -2178,14 +2176,6 @@
   (local $4 i32)
   (local $5 i32)
   i32.const 32
-  call $~lib/string/String#get:length
-  global.set $assembly/index/BASE
-  i32.const 32
-  global.get $assembly/index/BASE
-  i32.clz
-  i32.sub
-  global.set $assembly/index/LOG2_BASE
-  i32.const 32
   i32.const 0
   call $~lib/string/String#charAt
   global.set $assembly/index/LEADER
@@ -2206,7 +2196,7 @@
   local.set $1
   loop $for-loop|0
    local.get $1
-   global.get $assembly/index/BASE
+   i32.const 58
    i32.lt_s
    local.set $2
    local.get $2
@@ -2233,7 +2223,7 @@
      call $~lib/string/String.__concat
      local.tee $5
      i32.const 512
-     i32.const 18
+     i32.const 20
      i32.const 4
      call $~lib/builtins/abort
      unreachable
@@ -2986,11 +2976,11 @@
       local.get $6
       local.get $10
       local.get $8
-      global.get $assembly/index/BASE
+      i32.const 58
       i32.rem_u
       call $~lib/typedarray/Uint8Array#__set
       local.get $8
-      global.get $assembly/index/BASE
+      i32.const 58
       i32.div_u
       local.set $8
       local.get $10
@@ -3011,7 +3001,7 @@
     if
      i32.const 784
      i32.const 512
-     i32.const 60
+     i32.const 62
      i32.const 4
      call $~lib/builtins/abort
      unreachable
@@ -3178,7 +3168,7 @@
   i32.sub
   local.set $5
   local.get $5
-  global.get $assembly/index/LOG2_BASE
+  i32.const 6
   i32.mul
   i32.const 1
   i32.sub
@@ -3251,7 +3241,7 @@
      local.get $11
      if
       local.get $8
-      global.get $assembly/index/BASE
+      i32.const 58
       local.get $6
       local.get $10
       call $~lib/typedarray/Uint8Array#__get
@@ -3287,7 +3277,7 @@
      call $~lib/rt/stub/__release
      i32.const 784
      i32.const 512
-     i32.const 105
+     i32.const 107
      i32.const 6
      call $~lib/builtins/abort
      unreachable
@@ -3420,7 +3410,7 @@
   i32.const 832
   i32.const 1
   global.set $~argumentsLength
-  global.get $assembly/index/BASE
+  i32.const 58
   i32.const 0
   call $~lib/string/String.fromCharCode|trampoline
   local.tee $2
@@ -3430,7 +3420,7 @@
   call $~lib/string/String.__concat
   local.tee $4
   i32.const 512
-  i32.const 128
+  i32.const 130
   i32.const 2
   call $~lib/builtins/abort
   unreachable

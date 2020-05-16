@@ -2,8 +2,10 @@
 // https://github.com/cryptocoinjs/base-x/blob/master/src/index.js
 
 const ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
-const BASE = ALPHABET.length;
-const LOG2_BASE = 32 - clz(BASE);
+
+@inline const BASE = 58;
+@inline const LOG2_BASE = 32 - clz(BASE);
+
 const LEADER = ALPHABET.charAt(0);
 const LEADER_CODE = ALPHABET.charCodeAt(0);
 // log(256) / log(58) = 1.365658237309761 ~= 554 / 405
