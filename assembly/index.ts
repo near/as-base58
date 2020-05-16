@@ -45,11 +45,11 @@ export function encode(source: Uint8Array): string {
 
   // Process the bytes.
   while (pbegin != pend) {
-    let carry = i32(source[pbegin])
+    let carry = u32(source[pbegin])
     // Apply "b58 = b58 * 256 + ch".
     let i = 0
-    for (let it = size - 1; (carry != 0 || i < length) && (it != -1); it--, i++) {
-      carry += i32(b58[it]) << 8;
+    for (let it = size - 1; it != -1 && (carry != 0 || i < length); --it, ++i) {
+      carry += u32(b58[it]) << 8;
       b58[it] = carry % BASE;
       carry = carry / BASE;
     }
@@ -73,13 +73,13 @@ export function encode(source: Uint8Array): string {
 
 export function decodeUnsafe(source: string): Uint8Array | null {
   let srcLen = source.length;
-  if (srcLen == 0) return new Uint8Array(0);
+  if (!srcLen) return new Uint8Array(0);
   // Skip leading spaces.
   if (source.charCodeAt(0) == /* Space */ 0x20) return null;
   // Skip and count leading '1's.
   let length = 0;
   let psz = 0;
-  while (source.charCodeAt(psz) == LEADER_CODE) psz++;
+  while (source.charCodeAt(psz) == LEADER_CODE) ++psz;
   let zeroes = psz;
   // Allocate enough space in big-endian base256 representation.
   let size = FACTOR(srcLen - psz); // log(BASE) / log(256), rounded up.
@@ -90,12 +90,12 @@ export function decodeUnsafe(source: string): Uint8Array | null {
     // Decode character
     let carry: u32 = BASE_MAP[source.charCodeAt(psz++)]
     // Invalid character
-    if (carry == 255) return null;
+    if (carry == 0xFF) return null;
     let i = 0;
     let it3 = size - 1;
-    for (; (carry != 0 || i < length) && (it3 != -1); it3--, i++) {
+    for (; it3 != -1 && (carry != 0 || i < length); --it3, ++i) {
       carry += u32(BASE * b256[it3]);
-      b256[it3] = carry & 0xFF;
+      b256[it3] = carry;
       carry >>>= 8;
     }
     if (carry != 0) {

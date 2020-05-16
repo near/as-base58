@@ -2952,20 +2952,20 @@
     i32.sub
     local.set $10
     loop $for-loop|2
-     local.get $8
-     i32.const 0
+     local.get $10
+     i32.const -1
      i32.ne
      if (result i32)
-      i32.const 1
-     else
-      local.get $9
-      local.get $2
-      i32.lt_s
-     end
-     if (result i32)
-      local.get $10
-      i32.const -1
+      local.get $8
+      i32.const 0
       i32.ne
+      if (result i32)
+       i32.const 1
+      else
+       local.get $9
+       local.get $2
+       i32.lt_s
+      end
      else
       i32.const 0
      end
@@ -2984,11 +2984,11 @@
       local.get $10
       local.get $8
       global.get $assembly/index/BASE
-      i32.rem_s
+      i32.rem_u
       call $~lib/typedarray/Uint8Array#__set
       local.get $8
       global.get $assembly/index/BASE
-      i32.div_s
+      i32.div_u
       local.set $8
       local.get $10
       i32.const 1
@@ -3123,8 +3123,7 @@
   call $~lib/string/String#get:length
   local.set $1
   local.get $1
-  i32.const 0
-  i32.eq
+  i32.eqz
   if
    i32.const 0
    i32.const 0
@@ -3228,20 +3227,20 @@
     i32.sub
     local.set $10
     loop $for-loop|2
-     local.get $8
-     i32.const 0
+     local.get $10
+     i32.const -1
      i32.ne
      if (result i32)
-      i32.const 1
-     else
-      local.get $9
-      local.get $2
-      i32.lt_s
-     end
-     if (result i32)
-      local.get $10
-      i32.const -1
+      local.get $8
+      i32.const 0
       i32.ne
+      if (result i32)
+       i32.const 1
+      else
+       local.get $9
+       local.get $2
+       i32.lt_s
+      end
      else
       i32.const 0
      end
@@ -3259,8 +3258,6 @@
       local.get $6
       local.get $10
       local.get $8
-      i32.const 255
-      i32.and
       call $~lib/typedarray/Uint8Array#__set
       local.get $8
       i32.const 8
