@@ -2972,8 +2972,6 @@
       call $~lib/typedarray/Uint8Array#__get
       i32.const 8
       i32.shl
-      i32.const 255
-      i32.and
       i32.add
       local.set $8
       local.get $6
@@ -3004,7 +3002,7 @@
     if
      i32.const 784
      i32.const 512
-     i32.const 57
+     i32.const 56
      i32.const 4
      call $~lib/builtins/abort
      unreachable
@@ -3287,7 +3285,7 @@
      call $~lib/rt/stub/__release
      i32.const 784
      i32.const 512
-     i32.const 107
+     i32.const 105
      i32.const 6
      call $~lib/builtins/abort
      unreachable
@@ -3431,7 +3429,7 @@
   call $~lib/string/String.__concat
   local.tee $4
   i32.const 512
-  i32.const 131
+  i32.const 129
   i32.const 2
   call $~lib/builtins/abort
   unreachable

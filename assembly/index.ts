@@ -44,12 +44,11 @@ export function encode(source: Uint8Array): string {
 
   // Process the bytes.
   while (pbegin != pend) {
-    let carry = i32(source[pbegin]);
-
+    let carry = i32(source[pbegin])
     // Apply "b58 = b58 * 256 + ch".
     let i = 0
     for (let it = size - 1; (carry != 0 || i < length) && (it != -1); it--, i++) {
-      carry += u32(b58[it] << 8);
+      carry += i32(b58[it]) << 8;
       b58[it] = carry % BASE;
       carry = carry / BASE;
     }
@@ -70,7 +69,6 @@ export function encode(source: Uint8Array): string {
   for (; it < size; ++it) str += ALPHABET.charAt(b58[it]);
   return str;
 }
-
 
 export function decodeUnsafe(source: string): Uint8Array | null {
   let srcLen = source.length;
