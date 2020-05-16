@@ -99,6 +99,7 @@
  (global $~lib/builtins/i32.MAX_VALUE i32 (i32.const 2147483647))
  (global $assembly/index/BASE_MAP (mut i32) (i32.const 0))
  (global $~argumentsLength (mut i32) (i32.const 0))
+ (global $~lib/ASC_OPTIMIZE_LEVEL i32 (i32.const 0))
  (global $node_modules/@as-pect/assembly/assembly/internal/Reflect/Reflect.FAILED_MATCH i32 (i32.const 0))
  (global $node_modules/@as-pect/assembly/assembly/internal/Reflect/Reflect.SUCCESSFUL_MATCH i32 (i32.const 1))
  (global $node_modules/@as-pect/assembly/assembly/internal/Reflect/Reflect.DEFER_MATCH i32 (i32.const 2))
@@ -3002,7 +3003,7 @@
      i32.const 784
      i32.const 512
      i32.const 68
-     i32.const 4
+     i32.const 6
      call $~lib/builtins/abort
      unreachable
     end
@@ -3418,7 +3419,7 @@
   call $~lib/string/String.__concat
   local.tee $4
   i32.const 512
-  i32.const 136
+  i32.const 135
   i32.const 2
   call $~lib/builtins/abort
   unreachable

@@ -64,17 +64,16 @@ export function encode(source: Uint8Array): string {
       b58[it] = carry % BASE;
       carry = carry / BASE;
     }
-
-    assert(carry == 0, 'Non-zero carry');
+    if (ASC_OPTIMIZE_LEVEL == 0) {
+      assert(carry == 0, 'Non-zero carry');
+    }
     length = i;
     pbegin++;
   }
 
   // Skip leading zeroes in base58 result.
   let it = size - length;
-  while (it != size && b58[it] == 0) {
-    it++;
-  }
+  while (it != size && b58[it] == 0) ++it;
 
   // Translate the result into a string.
   let str = LEADER.repeat(zeroes);
@@ -90,11 +89,12 @@ export function decodeUnsafe(source: string): Uint8Array | null {
   // Skip and count leading '1's.
   let length = 0;
   let psz = 0;
+
   while (source.charCodeAt(psz) == LEADER_CODE) ++psz;
+
   let zeroes = psz;
   // Allocate enough space in big-endian base256 representation.
   let size = FACTOR(srcLen - psz);
-  // log(size);
   let b256 = new Uint8Array(size);
   // Process the characters;
   while (srcLen > psz) {
@@ -118,9 +118,8 @@ export function decodeUnsafe(source: string): Uint8Array | null {
   if (source.charCodeAt(psz) == /* Space */ 0x20) return null;
   // Skip leading zeroes in b256.
   let it4 = size - length;
-  while (it4 != size && b256[it4] == 0) {
-    it4++;
-  }
+  while (it4 != size && b256[it4] == 0) ++it4;
+
   let vch = new Uint8Array(zeroes + (size - it4));
   if (zeroes) vch.fill(0, 0, zeroes);
   let j = zeroes;
